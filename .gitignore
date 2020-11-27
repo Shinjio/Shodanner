@@ -1,0 +1,6 @@
+*.out
+tags
+config.json
+*.pyc
+*.swp
+__pycache__
