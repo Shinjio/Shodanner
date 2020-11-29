@@ -20,7 +20,7 @@ class Shodanner:
     def scan(self, query=None, port=None, os=None, results=None, hostname=None, country=None, output=None, filters=["ip_str"]):
         """
         expected arguments:
-            custom : custom query, str
+            query : custom query, str
             port : int
             os : str
             results : number of expected results, int
@@ -58,33 +58,3 @@ class Shodanner:
             return ret
             
 
-        """
-        i = 0
-        if output:
-            with open(output, 'w') as f:
-                for device in self.api.search_cursor(query):
-                    if i == results:
-                        break
-
-                    data = json.dumps(device)
-                    msg = ""
-                    f.write("\nDevice n° " + str(i+1) + ":")
-                    
-                    for j in filters:
-                        try:
-                            if j == "vulns":
-                                msg += "[*] " + j + ": "
-                                for a in device[j]:
-                                    msg += a + ", "
-                                msg += "\n"
-                            else:
-                                msg += "[*] " + j + ": " + str(device[j]) + "\n"
-                        except KeyError:
-                            msg += "None\n"
-                        except Exception as e:
-                            msg += "[!] " + j + " skipped, " + str(e) + "\n"
-
-                    f.write("\n" + msg + "\n")
-                    #f.write(json.dumps(device))
-                    i +=1
-        """
