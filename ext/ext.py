@@ -8,7 +8,7 @@ def buildQuery(port, os, hostname, country):
     if hostname:
         query += 'hostname: ' + hostname + ' '
     if country:
-        query += 'country: ' + contry + ' '
+        query += 'country: ' + country + ' '
     return query
 
 def getFilters():
@@ -42,5 +42,6 @@ vulns
     while filters == "?list":
         print(filtersList)
         filters = input("Type the filters you need to get separated by a comma. (?list) ")
+    filters = filters.split(',')
     
-    return filters.split(',')
+    return filters

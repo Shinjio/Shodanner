@@ -27,17 +27,16 @@ if __name__ == "__main__":
     #Move to root project dir
     ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
     os.chdir(ROOT_DIR)
-    
-    #get arguments as dictionary
-    args = vars(parser())
 
+    t = "scan"
+    
     #Shodanner object
-    shodanner = Shodanner()
+    shodanner = Shodanner("config.json")
    
     #what do we want to do?
-    if args['type'] == "scan":
-        shodanner.scan(**args)
-    elif args['type'] == "exploits":
+    if t == "scan":
+        print(shodanner.scan(query="port: 80"))
+    elif t == "exploits":
         shodanner.exploits()
     else:
         shodanner.custom()
