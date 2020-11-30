@@ -11,8 +11,8 @@ class Loader:
             with open(self.file) as f:
                 f = json.load(f)
                 return f[key]
-        except Exception as e:
-            print(str(e))
         except KeyError:
             print("{} not found!".format(key))
-        
+        except Exception as e:
+            print(str(e))
+

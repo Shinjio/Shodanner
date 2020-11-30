@@ -17,7 +17,7 @@ class Shodanner:
         self.api = shodan.Shodan(config.get("api"))
 
 
-    def scan(self, query=None, port=None, os=None, results=None, hostname=None, country=None, output=None, filters=["ip_str"]):
+    def search(self, query=None, port=None, os=None, results=None, hostname=None, country=None, output=None, filters=["ip_str"]):
         """
         expected arguments:
             query : custom query, str
