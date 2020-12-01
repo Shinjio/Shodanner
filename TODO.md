@@ -5,4 +5,5 @@
 - [ ] https://api.shodan.io wrapper
 - [ ] https://streams.shodan.io wrapper
 - [ ] https://exploits.shodan.io wrapper
-
+- [ ] CHECK IF IP IS HONEYPOT!!
+- [ ] Important: improve the project's structure to avoid reduntant imports 

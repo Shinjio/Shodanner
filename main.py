@@ -16,7 +16,5 @@ if __name__ == "__main__":
    
     #what do we want to do?
     #print(shodanner.search(query="port: 80"))
-    host = shodanner.host("87.0.243.202")
-    vulns = host.get("vulns")
-    for i in vulns:
-        print("{}: {} - {}".format(i.name, i.cvss, "https://www.cvedetails.com/cve/"+i.name))
+    honeypot = shodanner.honeyscore("87.0.243.202")
+    print(honeypot)

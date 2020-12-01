@@ -1,3 +1,4 @@
+import requests
 import shodan
 import json
 import os
@@ -15,7 +16,8 @@ class Shodanner:
 
         #Load config.json 'api'
         config = Loader(path)
-        self.api = shodan.Shodan(config.get("api"))
+        self.token = config.get("api")
+        self.api = shodan.Shodan(self.token)
 
 
     def search(self, query=None, port=None, os=None, results=None, hostname=None, country=None, output=None, filters=["ip_str"]):
@@ -65,3 +67,5 @@ class Shodanner:
             return
         return HostParser(self.api.host(ip, history=history, minify=minify))
 
+    def honeyscore(self, ip):
+        return requests.get("https://api.shodan.io/labs/honeyscore/{}?key={}".format(ip, self.token)).text 
