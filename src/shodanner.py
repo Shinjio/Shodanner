@@ -4,6 +4,7 @@ import os
 
 from .loader import Loader
 from ext.ext import getFilters, buildQuery
+from ext.parser import HostParser
 
 #Main class
 class Shodanner:
@@ -56,5 +57,11 @@ class Shodanner:
                 f.write(ret)
         else:
             return ret
-            
+    
+    def host(self, ip, history=False, minify=False):
+        #if type is invalid
+        if ((type(history) or type(bool)) != bool) or type(ip) != str:
+            print("One or more parameters are invalid... returning.")
+            return
+        return HostParser(self.api.host(ip, history=history, minify=minify))
 

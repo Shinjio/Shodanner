@@ -10,16 +10,13 @@ if __name__ == "__main__":
     ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
     os.chdir(ROOT_DIR)
 
-    t = "search"
     
     #Shodanner object
     shodanner = Shodanner("config.json")
    
     #what do we want to do?
-    if t == "search":
-        print(shodanner.search(query="port: 80"))
-    elif t == "exploits":
-        shodanner.exploits()
-    else:
-        shodanner.custom()
-
+    #print(shodanner.search(query="port: 80"))
+    host = shodanner.host("87.0.243.202")
+    vulns = host.get("vulns")
+    for i in vulns:
+        print("{}: {} - {}".format(i.name, i.cvss, "https://www.cvedetails.com/cve/"+i.name))

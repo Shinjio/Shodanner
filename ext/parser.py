@@ -9,16 +9,6 @@ class CVE:
         self.references = references
         self.summary = summary
 
-#Contains informations about a service
-class Service:
-    def __init__(self, server, port, protocol, hostnames, data, isp):
-        self.server = server
-        self.port = port
-        self.protocol = protocol
-        self.hostnames = hostnames
-        self.data = data
-        self.isp = isp
-
 #Parse json file returned by Shodan.hosts() 
 class HostParser:
     def __init__(self, source):
@@ -31,55 +21,40 @@ class HostParser:
         self.country = source["country_name"]
         self.os = source["os"]
         self.org = source["org"]
-
-        #Extract ports
+        self.data = source["data"]
+        self.vulns = vulns(source)
+        
         try:
             self.ports = [ d["port"] for d in source["data"] ]
             self.ports.sort()
         except KeyError:
             pass
-
-        #Extract vulns
-        try:
-            self.vulns = []
-            for i in source["data"]:
-                if "vulns" in i.keys():
-                    for v in i["vulns"]:
-                        tmp = CVE(v, i["vulns"][v]["cvss"], i["vulns"][v]["references"], i["vulns"][v]["summary"])
-                        self.vulns.append(tmp)
-                    break
-        except KeyError:
-            pass
-
-        #Extract services, damn this is so ugly -Alex
-        try:
-            self.services = []
-            for s in source["data"]:
-                if "http" in s.keys():
-                    server = s["http"]["server"] if s["http"]["server"] else "Unkown web-server"
-                elif "ssh" in s.keys():
-                    server = s["product"] + " " + s["version"]
-                elif "ftp" in s.keys():
-                    server = "FTP Anon login" if s["ftp"]["anonymous"] else "FTP"
-                else:
-                    server = "Unknown service"
-
-                port = s["port"]
-                protocol = s["transport"]
-                hostnames = s["hostnames"]
-                isp = s["isp"]
-                data = s["data"]
-                self.services.append(Service(server, port, protocol, hostnames, data, isp))
-
-        except KeyError:
-            pass
-         
+        
     #returns attribute value of name
     #valid arguments: ip, postal_code, city, last_update, country, os, org, ports, vulns, services
     def get(self, name):
         if name in ["ip", "postal_code", "city", "last_update", "country", 
-                    "os", "org", "ports", "vulns", "services"]:
+                    "os", "data", "org", "ports", "vulns", "services"]:
 
             return getattr(self, name)
-        else:
-            return ""
+
+    def getAttr(self):
+        return ["ip", "postal_code", "city", "last_update", "country", 
+                    "data", "os", "org", "ports", "vulns", "services"]
+
+def vulns(source):
+    #Extract vulns
+    try:
+        vulns = []
+        for i in source["data"]:
+            if "vulns" in i.keys():
+                for v in i["vulns"]:
+                    tmp = CVE(v, i["vulns"][v]["cvss"], i["vulns"][v]["references"], i["vulns"][v]["summary"])
+                    vulns.append(tmp)
+                break
+    except KeyError:
+        pass
+    
+    return vulns
+
+
