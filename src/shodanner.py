@@ -6,10 +6,12 @@ import os
 from .loader import Loader
 from ext.ext import buildQuery
 from ext.parser import HostParser
+from .exploit import Exploit
 
 #Main class
 class Shodanner:
     def __init__(self, file=None, token=""):
+        self.exploit = Exploit() 
         """
         path : path to config.json
         """
@@ -77,3 +79,4 @@ class Shodanner:
 
     def honeyscore(self, ip):
         return requests.get("https://api.shodan.io/labs/honeyscore/{}?key={}".format(ip, self.token)).text 
+    
