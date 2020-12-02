@@ -4,21 +4,25 @@ import json
 import os
 
 from .loader import Loader
-from ext.ext import getFilters, buildQuery
+from ext.ext import buildQuery
 from ext.parser import HostParser
 
 #Main class
 class Shodanner:
-    def __init__(self, path):
+    def __init__(self, file=None, token=""):
         """
         path : path to config.json
         """
-
-        #Load config.json 'api'
-        config = Loader(path)
-        self.token = config.get("api")
-        self.api = shodan.Shodan(self.token)
-
+        if file:
+            #Load config.json 'api'
+            config = Loader(file)
+            self.token = config.get("api")
+            self.api = shodan.Shodan(self.token)
+        elif token:
+            self.token = token
+            self.api = shodan.Shodan(token)
+        else:
+            return None
 
     def quickSearch(self, query=None, port=None, os=None, results=None, hostname=None, country=None, output=None, filters=["ip_str"]):
         """
@@ -61,6 +65,9 @@ class Shodanner:
             ret = [i for i in ret.split("\n") if i != '']
             return ret
     
+    def getFilters(self):
+        return "asn ,cpe ,data, devicetype, domains, hash, hostnames, http, info, ip, ip_str, isp, location, org, os, port, product, _shodan, tags, timestamp, transport, version, vulns"
+
     def host(self, ip, history=False, minify=False):
         #if type is invalid
         if ((type(history) or type(bool)) != bool) or type(ip) != str:

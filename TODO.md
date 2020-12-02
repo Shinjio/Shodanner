@@ -2,6 +2,7 @@
   - [X] Write HostParser class
     - [X] Test the class with default parameters
     - [X] Test the class with history and minify
+    - [ ] Catch for bugs.
 - [ ] Interactive mode
 - [ ] Vulnerabilities loopkup
   - [ ] Exploit method
