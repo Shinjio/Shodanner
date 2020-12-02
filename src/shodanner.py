@@ -65,7 +65,7 @@ class Shodanner:
         if ((type(history) or type(bool)) != bool) or type(ip) != str:
             print("One or more parameters are invalid... returning.")
             return
-        return HostParser(self.api.host(ip, history=history, minify=minify))
+        return HostParser(self.api.host(ip, history=history, minify=minify), minify=minify, history=history)
 
     def honeyscore(self, ip):
         return requests.get("https://api.shodan.io/labs/honeyscore/{}?key={}".format(ip, self.token)).text 

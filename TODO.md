@@ -1,4 +1,7 @@
-- [X] Host enumeration by IP
+- [ ] Host enumeration by IP
+  - [X] Write HostParser class
+    - [X] Test the class with default parameters
+    - [X] Test the class with history and minify
 - [ ] Interactive mode
 - [ ] Vulnerabilities loopkup
   - [ ] Exploit method
