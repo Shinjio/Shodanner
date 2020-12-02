@@ -1,19 +1,20 @@
-- [ ] Host enumeration by IP
+- [X] Host enumeration by IP
   - [X] Write HostParser class
     - [X] Test the class with default parameters
     - [X] Test the class with history and minify
     - [ ] Catch for bugs.
 - [ ] Interactive mode
-- [ ] Vulnerabilities loopkup
-  - [ ] Exploit method
+- [X] Vulnerabilities loopkup
+  - [X] Exploit method
     - [X] findExploit (scrape cvedetails.com for PoC)
-    - [ ] Exploit class for shodanner.py
+    - [X] exploit attribute for Shodanner constructor
 - [ ] https://api.shodan.io wrapper
   - [ ] DNS Methods
   - [ ] Directory Methods
   - [ ] Netwrok Alerts
   - [ ] Search Methods
-- [ ] https://exploits.shodan.io wrapper
+- [X] https://exploits.shodan.io wrapper
+  - [X] We made it better and free. 
 - [X] CHECK IF IP IS HONEYPOT!!
 - [ ] Improve the project's structure to avoid reduntant imports
-- [ ] List filters method for quickSearch, getFilters() from ext is TRASH
+- [X] List filters method for quickSearch, getFilters() from ext is TRASH
