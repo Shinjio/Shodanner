@@ -15,3 +15,4 @@
 - [ ] https://exploits.shodan.io wrapper
 - [X] CHECK IF IP IS HONEYPOT!!
 - [ ] Improve the project's structure to avoid reduntant imports
+- [ ] List filters method for quickSearch, getFilters() from ext is TRASH

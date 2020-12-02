@@ -44,7 +44,6 @@ class HostParser:
     def listAttr(self):
         return ["ip", "postal_code", "city", "last_update", "country", 
                     "data", "os", "org", "ports", "vulns", "services"]
-
 def vulns(source):
     #Extract vulns
     try:

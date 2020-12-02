@@ -1,4 +1,3 @@
-#Build query
 def buildQuery(port, os, hostname, country):
     query = ""
     if port:
