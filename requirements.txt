@@ -2,3 +2,5 @@ shodan
 readline
 colorama
 iso3166
+beautifulsoup4
+lxml
