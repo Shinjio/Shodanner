@@ -1,0 +1,14 @@
+- [X] Host enumeration by IP
+- [ ] Interactive mode
+- [ ] Vulnerabilities loopkup
+  - [ ] Exploit method
+    - [X] findExploit (scrape cvedetails.com for PoC)
+    - [ ] Exploit class for shodanner.py
+- [ ] https://api.shodan.io wrapper
+  - [ ] DNS Methods
+  - [ ] Directory Methods
+  - [ ] Netwrok Alerts
+  - [ ] Search Methods
+- [ ] https://exploits.shodan.io wrapper
+- [X] CHECK IF IP IS HONEYPOT!!
+- [ ] Improve the project's structure to avoid reduntant imports
