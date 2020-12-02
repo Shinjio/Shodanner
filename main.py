@@ -21,9 +21,24 @@ if __name__ == "__main__":
     #Shodanner object
     shodanner = Shodanner("config.json")
 
+    ips = shodanner.quickSearch(port=80, results=10)
+    print(ips)
+
+    """
+    ips = shodanner.quickSearch(port=80, results=10)
+    a = []
+    for i in ips.split('\n'):
+        if i == '':
+            pass
+        else:
+            a.append(i)
+    print(a)
+    """
+
+
     #what do we want to do?
     #print(shodanner.search(query="port: 80"))
-    ip = "87.0.243.202"
-    host = shodanner.host(ip, minify=True, history=True)
+    #ip = "87.0.243.202"
+    #host = shodanner.host(ip, minify=True, history=True)
     #host = api.host(ip, minify=True, history=True)
 

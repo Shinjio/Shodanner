@@ -58,6 +58,7 @@ class Shodanner:
             with open(output, 'w') as f:
                 f.write(ret)
         else:
+            ret = [i for i in ret.split("\n") if i != '']
             return ret
     
     def host(self, ip, history=False, minify=False):
