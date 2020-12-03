@@ -25,13 +25,13 @@ alex@pepe$: vim config.json
 ## Usage
 ```py
 #Here's, a quick demo
-#create Shodanner object
 from src.shodanner import Shodanner
 import time
 
+#create Shodanner object
 s = Shodanner("config.json")
 
-#let's search 15 ips matching our query
+#let's search 5 ips matching our query
 ips = s.quickSearch(query='country:"CN" port:80', results=5)
 
 #Notice how we must wait one second between
