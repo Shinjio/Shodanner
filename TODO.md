@@ -9,9 +9,9 @@
     - [X] findExploit (scrape cvedetails.com for PoC)
     - [X] exploit attribute for Shodanner constructor
 - [ ] https://api.shodan.io wrapper
-  - [ ] DNS Methods
+  - [X] DNS Methods
   - [ ] Directory Methods
-  - [ ] Netwrok Alerts
+  - [ ] Network Alerts
   - [ ] Search Methods
 - [X] https://exploits.shodan.io wrapper
   - [X] We made it better and free. 
