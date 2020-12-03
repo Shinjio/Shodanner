@@ -29,8 +29,8 @@ class DNS:
                        params = {"ips" : ip, "key" : self.token}).text)
 
         #the api returns a dict with the ip as key and a list.. ugly but it works
-        r = [ d for i in r.values() for d in i] 
-        return r
-
-
-    #TODO: subdomain fuzzing
+        try:
+            r = [ d for i in r.values() for d in i] 
+            return r
+        except:
+            return []

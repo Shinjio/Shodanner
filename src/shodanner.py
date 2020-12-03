@@ -7,11 +7,11 @@ from .loader import Loader
 from ext.ext import buildQuery
 from ext.parser import HostParser
 from .exploit import Exploit
+from .dns import DNS
 
 #Main class
 class Shodanner:
     def __init__(self, file=None, token=""):
-        self.exploit = Exploit()
         """
         path : path to config.json
         """
@@ -25,6 +25,9 @@ class Shodanner:
             self.api = shodan.Shodan(token)
         else:
             return None
+        
+        self.exploit = Exploit()
+        self.dns = DNS(self.token) 
 
     def quickSearch(self, query=None, port=None, os=None, results=None, hostname=None, country=None, output=None, filters=["ip_str"]):
         """
@@ -71,12 +74,17 @@ class Shodanner:
         return "asn ,cpe ,data, devicetype, domains, hash, hostnames, http, info, ip, ip_str, isp, location, org, os, port, product, _shodan, tags, timestamp, transport, version, vulns"
 
     def host(self, ip, history=False, minify=False):
+        try:
         #if type is invalid
-        if ((type(history) or type(bool)) != bool) or type(ip) != str:
-            print("One or more parameters are invalid... returning.")
+            if ((type(history) or type(bool)) != bool) or type(ip) != str:
+                print("One or more parameters are invalid... returning.")
+                return
+            info = self.api.host(ip, history=history, minify=minify)
+        except APIError:
             return
-        return HostParser(self.api.host(ip, history=history, minify=minify), minify=minify, history=history)
+
+        return HostParser(info, minify=minify, history=history)
 
     def honeyscore(self, ip):
         return requests.get("https://api.shodan.io/labs/honeyscore/{}?key={}".format(ip, self.token)).text 
-    
+
