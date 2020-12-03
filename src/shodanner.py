@@ -11,7 +11,6 @@ from .exploit import Exploit
 #Main class
 class Shodanner:
     def __init__(self, file=None, token=""):
-        self.exploit = Exploit() 
         """
         path : path to config.json
         """
