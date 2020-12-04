@@ -1,7 +1,7 @@
 *.out
+test.*
 tags
 config.json
 *.pyc
 *.swp
 __pycache__
-test.*
