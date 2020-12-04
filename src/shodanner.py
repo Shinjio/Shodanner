@@ -85,6 +85,17 @@ class Shodanner:
 
         return HostParser(info, minify=minify, history=history)
 
-    def honeyscore(self, ip):
-        return requests.get("https://api.shodan.io/labs/honeyscore/{}?key={}".format(ip, self.token)).text 
+    #Get your current IP address as seen from the internet
+    def myip(self):
+        return requests.get("https://api.shodan.io/tools/myip",
+                            params = {"key" : self.token}).text
+    
+    #Returns information about the Shodan account linked to this API key
+    def profile(self):
+        return json.loads(requests.get("https://api.shodan.io/api-info",
+                                        params = {"key" : self.token}).text)
 
+    #Calculates a honeypot probability score ranging from 0 (not a honeypot) to 1.0 (is a honeypot)
+    def honeyscore(self, ip):
+        return float(requests.get("https://api.shodan.io/labs/honeyscore/" + ip,
+                                   params = {"key" : self.token}).text)
