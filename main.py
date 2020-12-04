@@ -24,9 +24,7 @@ if __name__ == "__main__":
     ips = shodanner.quickSearch(port=80, results=10)
     print(ips)
 
-    
-
-    #what do we want to do?
+    #we want to do?
     #print(shodanner.search(query="port: 80"))
     #ip = "87.0.243.202"
     #host = shodanner.host(ip)

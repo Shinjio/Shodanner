@@ -29,7 +29,7 @@ class Shodanner:
         self.exploit = Exploit()
         self.dns = DNS(self.token) 
 
-    def quickSearch(self, query=None, port=None, os=None, results=None, hostname=None, country=None, output=None, filters=["ip_str"]):
+    def quickSearch(self, query=None, port=None, os=None, results=25, hostname=None, country=None, output=None, filters=["ip_str"]):
         """
         expected arguments:
             query : custom query, str
@@ -37,7 +37,7 @@ class Shodanner:
             os : str
             results : number of expected results, int
             hostname : str
-            country : str (2 chars, ex: IT, FR, UK)
+            country : str (2 chars, ex: IT, FR, UK
             output : output file, str
             filters : list of filters we want to grab from the scan, list
         """
