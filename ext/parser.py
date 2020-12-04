@@ -1,16 +1,16 @@
 import shodan 
 import json
 
-#Contains informations about a CVE
 class CVE:
+    #Contains informations about a CVE
     def __init__(self, name, cvss, references, summary):
         self.name = name
         self.cvss = float(cvss)
         self.references = references
         self.summary = summary
 
-#Parse json file returned by Shodan.hosts() 
 class HostParser:
+    #Parse json file returned by Shodan.hosts() 
     def __init__(self, source, minify=False, history=False):
         #ip, postal_code, city, last_update, country, os, org, ports, vulns, services
         try:
@@ -33,9 +33,9 @@ class HostParser:
         except KeyError as e:
             print(str(e))
         
+    def get(self, name):
     #returns attribute value of name
     #valid arguments: ip, postal_code, city, last_update, country, os, org, ports, vulns, services
-    def get(self, name):
         if hasattr(self, name):
             return getattr(self, name)
         else:
