@@ -1,10 +1,12 @@
 ![alt text](https://i.imgur.com/bwh8C9I.png)
 
-Shodanner is an API wrapper for the [shodan](https://shodan.io) API.
-Other than the classic API functions we added some spicy stuff that you can use for your spicy hacking.
+Shodanner is an API wrapper for the [shodan.io](https://shodan.io) API.
+We decided to write this package because we think that the official shodan API for
+python is missing many of the API Wrapper methods. We also wanted to add premium
+methods for free (Exploit methods, for example).
 
 ## Features
-The programmer using this library is free to use the [base functions](https://developer.shodan.io/api) that the API provides or the more interesting functions we developed:
+You are free to use the [methods](https://developer.shodan.io/api) that the API Wrapper provides, the python API's methods are used and improved in the methods we developed, most importantly:
 - Automated host enumeration
 	- enumerate info, open ports and vulns of a device
 - Exploits finder 
@@ -24,6 +26,7 @@ alex@pepe$: vim config.json
 ```
 ## Usage
 ```py
+
 #Here's, a quick demo
 from src.shodanner import Shodanner
 import time
@@ -47,6 +50,13 @@ for host in hosts:
     for vuln in host.vulns:
         print(f"[{host.ip}] {vuln.name} {vuln.cvss} - {vuln.references[0]}")
 ```
+
+Or you could just run the interactive mode by launching
+```
+python3 shodanner
+```
+outside the project's directory.
+
 for more details visit the [wiki](https://github.com/shinjio/Shodanner/wiki) . (that is a work in progress)
 
 ## Work in progress
