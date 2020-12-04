@@ -67,8 +67,7 @@ class Shodanner:
             with open(output, 'w') as f:
                 f.write(ret)
         else:
-            ret = [i for i in ret.split("\n") if i != '']
-            return ret
+            return [i for i in ret.split("\n") if i != '']
     
     def getFilters(self):
         return "asn ,cpe ,data, devicetype, domains, hash, hostnames, http, info, ip, ip_str, isp, location, org, os, port, product, _shodan, tags, timestamp, transport, version, vulns"
@@ -80,11 +79,48 @@ class Shodanner:
                 print("One or more parameters are invalid... returning.")
                 return
             info = self.api.host(ip, history=history, minify=minify)
+            return HostParser(info, minify=minify, history=history)
         except APIError:
-            return
+            return 
 
-        return HostParser(info, minify=minify, history=history)
 
+    #Get your current IP address as seen from the internet
+    def myip(self):
+        return requests.get("https://api.shodan.io/tools/myip",
+                            params = {"key" : self.token}).text
+    
+    #Returns information about the Shodan account linked to this API key
+    def profile(self):
+        return json.loads(requests.get("https://api.shodan.io/api-info",
+                                        params = {"key" : self.token}).text)
+
+
+    #   TODO: Move this on the future wiki/documentation of the project
+    #   --------------------------------------------------------------------------------
+    #       The api provides an on-demand scanning of hosts. 
+    #       You must have a paid API plan in order to use the scan methods.
+    #       Scanning 1 IP requires 1 scan credit, check your profile()["scan_credits"]
+    #       to see how many you have left.
+    #   --------------------------------------------------------------------------------
+    #Use this method to request Shodan to crawl an IP address, this will take some
+    #time depending on the target, a dictionary containing the id of the scan
+    #is returned, use the id for calling the scanStatus() method
+    def scan(self, ip):
+        r = json.loads(requests.post("https://api.shodan.io/shodan/scan?key=" + self.token,
+                                      data = {"ips" : ip}).text)
+        return r
+
+    #Check the process of a previously submitted scan request. 
+    #Possible values for the status are: SUBMITTING, QUEQUE, PROCESSING, DONE
+    def scanStatus(self, scanid):
+        r = json.loads(requests.get("https://api.shodan.io/shodan/scan/" + scanid,
+                                    params = {"key" : self.token}).text)
+        try:
+            return r["status"]
+        except KeyError:
+            return "Scan not found"
+
+    #Calculates a honeypot probability score ranging from 0 (not a honeypot) to 1.0 (is a honeypot)
     def honeyscore(self, ip):
-        return requests.get("https://api.shodan.io/labs/honeyscore/{}?key={}".format(ip, self.token)).text 
-
+        return float(requests.get("https://api.shodan.io/labs/honeyscore/" + ip,
+                                   params = {"key" : self.token}).text)
