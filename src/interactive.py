@@ -1,4 +1,5 @@
 import shodan
+import socket
 import readline
 import colorama
 import sys
@@ -62,8 +63,7 @@ class Interactive(Cmd):
     def do_exploitdb(self, query):
         """Look for an exploit on exploitDB."""
         if query:
-            for e in self.shodanner.exploit.searchExploitDB(query):
-                print(e)
+            print(*( i for i in self.shodanner.exploit.searchExploitDB(query)), sep='\n')
         else:
             print("please enter an exploit name")
 
@@ -105,26 +105,20 @@ class Interactive(Cmd):
         """Returns information about your profile."""
         p = self.shodanner.profile()
         #TOFIX, i seriously suck at formatting
-        print("""
-        Usage limits:
-            scan_credits: {}
-            query_credits: {}
-            monitored_ips: {}
-
-        scan_credis: {}
-        query_credits: {}
-        unlocked_left: {}
-        plan: {}\n""".format(p["usage_limits"]["scan_credits"], p["usage_limits"]["query_credits"], 
+        print("Usage limits:\n\tscan_credits: {}\n\tquery_credits: {}\n\tmonitored_ips: {}\n\nscan_credis: {}\nquery_credits: {}\nunlocked_left: {}\nplan: {}\n".format(p["usage_limits"]["scan_credits"], p["usage_limits"]["query_credits"], 
                            p["usage_limits"]["monitored_ips"], p["scan_credits"], 
                            p["query_credits"], p["unlocked_left"], p["plan"]))
               
 
-    #DONE kinda, you should check if the ip is valid, apparently shodan will try
-    #to scan an invalid ip endinding up wasting the credit, bruh.
-    #Gosh, i finished my redbull.
+    #DONE 
     def do_scan(self, args):
         """Crawl an IP address, might take a while."""
         if args:
+            try:
+                socket.inet_aton(args)
+            except socket.error:
+                #not legal IP.
+                print("Invalid IP.")
             s = self.shodanner.scan(args)
             try:
                 print("count: {}\nid: {}\ncredits_left: {}".format(s["count"], 
@@ -145,25 +139,12 @@ class Interactive(Cmd):
     #DONE
     def do_reverse(self,args):
         """Look up the hostnames that have been defined for the given IP addresses."""
-        dns = self.shodanner.dns.reverse(args)
-        if type(dns) == list:
-            for d in dns:
-                print(d)
-        else:
-            print(dns)
+        return self.shodanner.dns.reverse(args)
     
     #DONE
     def do_domain(self,args):
         """Get all the subdomains for a given domain"""
-        if args:
-            sub = self.shodanner.dns.domain(args)
-            if sub:
-                for s in sub:
-                    print(s)
-            else:
-                print("No subdomains found.")
-        else:
-            print("please insert a domain name")
+        print(self.shodanner.dns.domain(args))
 
     #DONE
     def do_resolve(self, args):
@@ -186,10 +167,6 @@ class Interactive(Cmd):
     def do_clear(self, args):
         """Clear the screen"""
         os.system('clear')
-
-    def do_EOF(self, args):
-        "Close shodanner"""
-        sys.exit()
 
     def do_exit(self, args):
         """Close shodanner"""
