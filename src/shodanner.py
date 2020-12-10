@@ -121,6 +121,19 @@ class Shodanner:
         except KeyError:
             return "NOT_FOUND"
 
+    def query(self):
+        r = json.loads(requests.get("https://api.shodan.io/shodan/query", params= {"key" : self.token}).text)
+        return r
+
+    def query_search(self):
+        r = json.loads(requests.get("https://api.shodan.io/shodan/query/search", params= {"key" : self.token}).text)
+        return r
+
+    def query_tags(self):
+        r = json.loads(requests.get("https://api.shodan.io/shodan/query/tags", params= {"key" : self.token}).text)
+        return r
+
+
     def honeyscore(self, ip):
     #Calculates a honeypot probability score ranging from 0 (not a honeypot) to 1.0 (is a honeypot)
         try:
