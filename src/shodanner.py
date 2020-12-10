@@ -80,7 +80,7 @@ class Shodanner:
                 return
             info = self.api.host(ip, history=history, minify=minify)
             return HostParser(info, minify=minify, history=history)
-        except APIError:
+        except shodan.exception.APIError:
             return 
 
 
@@ -113,13 +113,13 @@ class Shodanner:
 
     def scanStatus(self, scanid):
     #Check the process of a previously submitted scan request. 
-    #Possible values for the status are: SUBMITTING, QUEQUE, PROCESSING, DONE
+    #Possible values for the status are: SUBMITTING, QUEQUE, PROCESSING, DONE, NOT_FOUND
         r = json.loads(requests.get("https://api.shodan.io/shodan/scan/" + scanid,
                                     params = {"key" : self.token}).text)
         try:
             return r["status"]
         except KeyError:
-            return "Scan not found"
+            return "NOT_FOUND"
 
     def honeyscore(self, ip):
     #Calculates a honeypot probability score ranging from 0 (not a honeypot) to 1.0 (is a honeypot)
